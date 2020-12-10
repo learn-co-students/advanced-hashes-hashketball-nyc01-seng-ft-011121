@@ -127,3 +127,122 @@ def game_hash
 end
 
 # Write code here
+def num_points_scored(player)
+  hash = game_hash
+  hash.each do |x,y|
+    y.each do |t,u|
+      if t == :players
+        u.each do |a|
+          a.each do |b,c|
+            if c == player
+              return a[:points]
+            end
+          end
+        end
+      end
+    end
+  end
+end
+
+def shoe_size(player)
+  hash = game_hash
+  hash.each do |x,y|
+    y.each do |t,u|
+      if t == :players
+        u.each do |a|
+          a.each do |b,c|
+            if c == player
+              return a[:shoe]
+            end
+          end
+        end
+      end
+    end
+  end
+end
+
+def team_colors(team)
+  hash = game_hash
+  hash.each do |x,y|
+    y.each do |t,u|
+      if u == team
+        return hash[x][:colors]
+      end
+    end
+  end
+end
+
+def team_names
+  hash = game_hash
+  hash.collect do |x,y|
+      hash[x][:team_name]
+  end
+end
+
+def player_numbers(team)
+  hash = game_hash
+  list = []
+  hash.each do |x,y|
+    if hash[x][:team_name] == team
+      y.each do |t,u|
+        if t == :players
+          u.each do |a|
+            a.each do |b,c|
+              if b == :number
+                list.push(a[:number])
+              end
+            end
+          end
+        end
+      end
+      return list
+    end
+  end
+end
+
+def player_stats(name)
+  hash = game_hash
+  hash.each do |x,y|
+    y.each do |t,u|
+      if t == :players
+        u.each do |a|
+          a.each do |b,c|
+            if c == name
+              return a
+            end
+          end
+        end
+      end
+    end
+  end
+end
+
+def big_shoe_rebounds
+  hash = game_hash
+  array = []
+  hash[:home][:players].each do |a|
+    a.each do |x,y|
+      if x == :shoe
+        array.push(a[:shoe])
+      end
+    end
+  end
+  hash[:away][:players].each do |i|
+    i.each do |x,y|
+      if x == :shoe
+        array.push(i[:shoe])
+      end
+    end
+  end
+  max = array.max
+
+  hash.each do |x,y|
+    hash[x][:players].each do |c|
+      c.each do |t,u|
+        if c[:shoe] ==  max
+          return c[:rebounds]
+        end
+      end
+    end
+  end
+end
