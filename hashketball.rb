@@ -1,4 +1,5 @@
-# Write your code below game_hash
+require 'pry'
+
 def game_hash
   {
     home: {
@@ -126,4 +127,105 @@ def game_hash
   }
 end
 
-# Write code here
+def num_points_scored(thisPlayerName)
+  teams = game_hash
+  #check home first
+  home_team_players = teams[:home][:players]
+  home_team_players.each do |playa|
+    if playa[:player_name]==thisPlayerName
+      return playa[:points]
+    end
+  end
+  #check away next
+  away_team_players = teams[:away][:players]
+  away_team_players.each do |playa|
+    if playa[:player_name]==thisPlayerName
+      return playa[:points]
+    end
+  end
+  "#{thisPlayerName} is not on either team."
+end
+
+def shoe_size(thisPlayerName)
+  teams = game_hash
+  #check home first
+  home_team_players = teams[:home][:players]
+  home_team_players.each do |playa|
+    if playa[:player_name]==thisPlayerName
+      return playa[:shoe]
+    end
+  end
+  #check away next
+  away_team_players = teams[:away][:players]
+  away_team_players.each do |playa|
+    if playa[:player_name]==thisPlayerName
+      return playa[:shoe]
+    end
+  end
+  "Sorry, #{thisPlayerName} is not on either team."
+end
+
+def  team_colors(thisTeamName)
+  teams = game_hash
+  if teams[:home][:team_name] == thisTeamName
+    return teams[:home][:colors]
+  elsif teams[:away][:team_name] == thisTeamName
+    return teams[:away][:colors]
+  else
+    return "Sorry, #{thisTeamName} is not in this game."
+  end
+end
+
+def team_names
+  teams = game_hash
+  [teams[:home][:team_name],teams[:away][:team_name]]
+end
+
+def player_numbers(thisTeamName)
+  teams = game_hash
+   if teams[:home][:team_name] == thisTeamName
+    return teams[:home][:players].map {|playa| playa[:number]}
+  elsif teams[:away][:team_name] == thisTeamName
+    return teams[:away][:players].map {|playa| playa[:number]}
+  else
+    return "Sorry, #{thisTeamName} is not in this game."
+  end
+end
+
+def player_stats(thisPlayerName)
+  teams = game_hash
+  #check home first
+  home_team_players = teams[:home][:players]
+  home_team_players.each do |playa|
+    if playa[:player_name]==thisPlayerName
+      return playa
+    end
+  end
+  #check away next
+  away_team_players = teams[:away][:players]
+  away_team_players.each do |playa|
+    if playa[:player_name]==thisPlayerName
+      return playa
+    end
+  end
+  "Sorry, #{thisPlayerName} is not on either team."
+end
+
+def big_shoe_rebounds
+  biggestshoe = -1  #default, will easily be exceeded
+  associated_rebounds_num = -1  #the rebounds number that goes with this player
+  teams = game_hash
+  
+  teams.each do |h_a|
+    teams[h_a[0]][:players].each do |playa|
+      if playa[:shoe]>biggestshoe
+        biggestshoe = playa[:shoe]
+        associated_rebounds_num = playa[:rebounds]
+      end
+    end
+  end
+  associated_rebounds_num
+end
+
+
+
