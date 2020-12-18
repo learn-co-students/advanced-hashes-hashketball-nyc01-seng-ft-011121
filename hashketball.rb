@@ -1,4 +1,4 @@
-# Write your code below game_hash
+
 def game_hash
   {
     home: {
@@ -126,4 +126,99 @@ def game_hash
   }
 end
 
-# Write code here
+
+def num_points_scored(player_name)
+  points = []
+  game_hash.each do |location, team_data|
+    team_data.each do |key, data|
+      if key == :players
+        data.each do |data_item|
+          if data_item[:player_name] == player_name
+            points << data_item[:points]
+          end
+        end
+      end
+    end
+  end
+  return points[0]
+end
+
+
+def shoe_size(player_name)
+  shoe_size = []
+  game_hash.each do |location, team_data|
+    team_data.each do |key, data|
+      if key == :players
+        data.each do |data_item|
+          if data_item[:player_name] == player_name
+            shoe_size << data_item[:shoe]
+          end
+        end
+      end
+    end
+  end
+  return shoe_size[0]
+end
+
+
+def team_colors(team_name)
+  game_hash.each do |location, team_data|
+    if team_data[:team_name] == team_name
+      return team_data[:colors]
+    end
+  end
+end
+
+
+def team_names
+  team_names = []
+  game_hash.each do |location, team_data|
+    team_names << team_data[:team_name]
+  end
+  return team_names
+end
+
+
+def player_numbers(team_name)
+  jersey_numbers = []
+  game_hash.each do |location, team_data|
+    if team_data[:team_name] == team_name
+      team_data[:players].each do |data_item|
+        jersey_numbers << data_item[:number]
+      end
+    end
+  end
+  return jersey_numbers
+end
+
+
+def player_stats(player)
+  game_hash.each{|home_away, keys|
+    keys[:players].each{|name|
+      if name[:player_name] == player
+        return name
+      end
+    }
+  }
+end
+
+
+def big_shoe_rebounds
+  shoe_size = 0 
+  rebounds = 0 
+  game_hash.each do |location, team_data|
+    team_data[:players].each do |data_item|
+      if data_item[:shoe] > shoe_size
+        shoe_size = data_item[:shoe]
+      end
+    end
+  end
+  game_hash.each do |location, team_data|
+    team_data[:players].each do |data_item|
+      if data_item[:shoe] == shoe_size
+        rebounds = data_item[:rebounds]
+      end
+    end
+  end
+  return rebounds
+end
