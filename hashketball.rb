@@ -126,4 +126,97 @@ def game_hash
   }
 end
 
-# Write code here
+def team_colors(team_name)
+    case team_name
+    when "Brooklyn Nets"
+        return ["Black", "White"]
+    when "Charlotte Hornets"
+        return ["Turquoise", "Purple"]
+    end
+end
+
+def team_names()
+    data = game_hash
+    return [data[:home][:team_name], data[:away][:team_name]]
+end
+
+def player_numbers(team_name)
+    data = game_hash
+    jersey = []
+    if team_name == "Brooklyn Nets"
+        data[:home][:players].each { |each_player|
+            jersey.push(each_player[:number])
+        }
+        return jersey
+    end
+    if team_name == "Charlotte Hornets"
+        data[:away][:players].each { |each_player|
+            jersey.push(each_player[:number])
+        }
+        return jersey
+    end
+end
+
+def player_stats(name)
+    data = game_hash
+    data[:home][:players].each { |each_player|
+        if each_player[:player_name] == name
+            return each_player
+        end
+    }
+    data[:away][:players].each { |each_player|
+        if each_player[:player_name] == name
+            return each_player
+        end
+    }
+end
+
+def shoe_size(name)
+    data = game_hash
+    data[:home][:players].each { |each_player|
+        if each_player[:player_name] == name
+            return each_player[:shoe]
+        end
+    }
+    data[:away][:players].each { |each_player|
+        if each_player[:player_name] == name
+            return each_player[:shoe]
+        end
+    }
+end
+
+def num_points_scored(name)
+    data = game_hash()
+    data[:home][:players].each { |each_player|
+        if each_player[:player_name] == name
+            return each_player[:points]
+        end
+    }
+    data[:away][:players].each { |each_player|
+        if each_player[:player_name] == name
+            return each_player[:points]
+        end
+    }
+end
+
+def big_shoe_rebounds()
+    data = game_hash()
+    largest_at_home = nil
+    largest_away = nil
+    rebounds_at_home = 0
+    rebounds_away = 0
+
+    data[:home][:players].each { |each_player|
+        if largest_at_home == nil || each_player[:shoe] > largest_at_home
+            largest_at_home = each_player[:shoe]
+            rebounds_at_home = each_player[:rebounds]
+        end
+    }
+    data[:away][:players].each { |each_player|
+        if largest_away == nil || each_player[:shoe] > largest_away
+            largest_away = each_player[:shoe]
+            rebounds_away = each_player[:rebounds]
+        end
+    }
+    rebounds_at_home > rebounds_away ? rebounds_at_home : rebounds_away
+end
