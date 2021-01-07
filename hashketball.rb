@@ -126,4 +126,89 @@ def game_hash
   }
 end
 
-# Write code here
+def num_points_scored(player_name)
+  home_players = game_hash[:home][:players]
+  away_players = game_hash[:away][:players]
+  all_players = home_players + away_players
+  
+  the_player = all_players.find do |player| 
+    player_name == player[:player_name] 
+  end
+  the_player[:points]
+end
+
+def shoe_size(player_name)
+  
+  home_players = game_hash[:home][:players]
+  away_players = game_hash[:away][:players]
+  all_players = home_players + away_players
+  
+  the_player = all_players.find do |player| 
+    player_name == player[:player_name] 
+  end
+  the_player[:shoe]
+  
+end
+
+def team_colors (team)
+  game_hash.each do |home_away, keys|
+    if keys[:team_name] == team
+      return keys[:colors].map
+    end
+  end
+end
+
+def team_names
+  home_name = game_hash[:home][:team_name]
+  away_name = game_hash[:away][:team_name]
+  names = [home_name, away_name]
+  names
+end
+
+def player_numbers(team_name)
+  numbers_arr = []
+  if team_name == "Brooklyn Nets"
+    counter = 0
+    while counter < 5 do
+      numbers_arr.push(game_hash[:home][:players][counter][:number]) 
+      counter +=1
+    end
+  end
+    if team_name == "Charlotte Hornets"
+    counter = 0
+    while counter < 5 do
+      numbers_arr.push(game_hash[:away][:players][counter][:number]) 
+      counter +=1
+    end
+  end
+  numbers_arr
+end
+
+def player_stats(player_name)
+  home_players = game_hash[:home][:players]
+  away_players = game_hash[:away][:players]
+  all_players = home_players + away_players
+  
+  the_player = all_players.find do |player| 
+    player_name == player[:player_name] 
+  end
+  the_player
+end
+
+def big_shoe_rebounds
+  home_players = game_hash[:home][:players]
+  away_players = game_hash[:away][:players]
+  all_players = home_players + away_players
+  all_shoes = []
+  all_players.each do
+    |plyr| all_shoes.push(plyr[:shoe])
+  end
+  all_shoes.sort!
+  largest_shoe = all_shoes.last 
+  largest_shoe
+  
+  highest_rebounds = all_players.find do |player| 
+    largest_shoe == player[:shoe] 
+  end
+  highest_rebounds[:rebounds]
+end
