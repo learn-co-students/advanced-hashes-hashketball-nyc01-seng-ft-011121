@@ -1,4 +1,4 @@
-# Write your code below game_hash
+require "pry"
 def game_hash
   {
     home: {
@@ -126,4 +126,91 @@ def game_hash
   }
 end
 
-# Write code here
+
+def num_points_scored(name)
+  game_hash.each do |key, value|
+    (0...game_hash[key][:players].length).each do |i|
+      #puts game_hash[key][:players][i][:player_name]
+      if game_hash[key][:players][i][:player_name] == name
+        return game_hash[key][:players][i][:points]
+      end
+    end
+  end
+
+end
+
+ def shoe_size(name)
+  game_hash.each do |key, value|
+    (0...game_hash[key][:players].length).each do |i|
+      if game_hash[key][:players][i][:player_name] == name
+        return game_hash[key][:players][i][:shoe]
+      end
+    end
+  end
+end 
+
+
+
+def team_colors(name)
+  game_hash.each do |key, value|
+    if game_hash[key][:team_name] == name
+      return game_hash[key][:colors]
+    end
+  end
+end
+
+p team_colors("Charlotte Hornets")
+
+def team_names
+  game_hash.map { |key, value| game_hash[key][:team_name] }
+end 
+
+p team_names
+
+def player_numbers(name)
+  game_hash.each do |key, value|
+    if game_hash[key][:team_name] == name
+      return (0...game_hash[key][:players].length).map { |i| game_hash[key][:players][i][:number] }
+    end
+  end
+end
+
+p player_numbers("Brooklyn Nets")
+def player_stats(name)
+  game_hash.each do |key, value|
+    (0...game_hash[key][:players].length).each do |i|
+      if game_hash[key][:players][i][:player_name] == name
+        return game_hash[key][:players][i]
+      end
+    end
+  end
+end
+
+def big_shoe_rebounds
+
+  biggest_shoes_size = 0
+  biggest_shoes_player = ""
+  biggest_shoes_team = nil
+  biggest_shoes_index = nil
+
+  game_hash.each do |key, value|
+    (0...game_hash[key][:players].length).each do |i|
+      if game_hash[key][:players][i][:shoe] > biggest_shoes_size
+        biggest_shoes_size = game_hash[key][:players][i][:shoe]
+        biggest_shoes_player = game_hash[key][:players][i][:player_name]
+        biggest_shoes_team = key
+        biggest_shoes_index = i
+      end
+    end
+  end
+
+  puts biggest_shoes_size
+  puts biggest_shoes_player
+  puts biggest_shoes_index
+  puts biggest_shoes_team
+
+  game_hash[biggest_shoes_team][:players][biggest_shoes_index][:rebounds]
+
+end
+
+p big_shoe_rebounds
